@@ -1,0 +1,348 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --color-navy-950: 7 11 20;
+    --color-navy-900: 11 17 32;
+    --color-navy-850: 14 23 42;
+    --color-navy-800: 19 30 56;
+    --color-navy-750: 24 39 73;
+    --color-navy-700: 30 50 90;
+    --color-surface-border: 30 44 74;
+    --color-surface-border-light: 42 60 99;
+  }
+
+  html.light,
+  body.light {
+    color-scheme: light;
+    --color-navy-950: 248 250 252;
+    --color-navy-900: 255 255 255;
+    --color-navy-850: 241 245 249;
+    --color-navy-800: 226 232 240;
+    --color-navy-750: 203 213 225;
+    --color-navy-700: 148 163 184;
+    --color-surface-border: 226 232 240;
+    --color-surface-border-light: 203 213 225;
+  }
+
+  body {
+    @apply bg-navy-950 text-slate-100 font-sans selection:bg-blue-600 selection:text-white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html.light body,
+  body.light {
+    @apply text-slate-800 bg-slate-50;
+  }
+
+  /* Custom subtle dark/light scrollbars */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-navy-750 rounded-full hover:bg-navy-700;
+  }
+}
+
+/* ==========================================================================
+   LIGHT MODE BULLETPROOF OVERRIDES
+   Guarantees immediate light theme styling even across dev HMR / cached states
+   ========================================================================== */
+
+html.light,
+html.light body,
+html.light #root,
+body.light,
+body.light #root {
+  background-color: #F8FAFC !important;
+  color: #0F172A !important;
+}
+
+/* Background layers */
+html.light .bg-navy-950,
+body.light .bg-navy-950 {
+  background-color: #F8FAFC !important;
+}
+
+html.light .bg-navy-950\/95,
+body.light .bg-navy-950\/95,
+html.light .bg-navy-950\/80,
+body.light .bg-navy-950\/80,
+html.light .bg-navy-950\/70,
+body.light .bg-navy-950\/70,
+html.light .bg-navy-950\/60,
+body.light .bg-navy-950\/60,
+html.light .bg-navy-950\/40,
+body.light .bg-navy-950\/40 {
+  background-color: rgba(248, 250, 252, 0.96) !important;
+}
+
+html.light .bg-navy-900,
+body.light .bg-navy-900 {
+  background-color: #FFFFFF !important;
+}
+
+html.light .bg-navy-900\/90,
+body.light .bg-navy-900\/90,
+html.light .bg-navy-900\/80,
+body.light .bg-navy-900\/80,
+html.light .bg-navy-900\/60,
+body.light .bg-navy-900\/60 {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+}
+
+html.light .bg-navy-850,
+body.light .bg-navy-850 {
+  background-color: #F1F5F9 !important;
+}
+
+html.light .bg-navy-850\/80,
+body.light .bg-navy-850\/80,
+html.light .bg-navy-850\/60,
+body.light .bg-navy-850\/60,
+html.light .bg-navy-850\/50,
+body.light .bg-navy-850\/50 {
+  background-color: rgba(241, 245, 249, 0.95) !important;
+}
+
+html.light .bg-navy-800,
+body.light .bg-navy-800 {
+  background-color: #E2E8F0 !important;
+}
+
+html.light .bg-navy-800\/90,
+body.light .bg-navy-800\/90 {
+  background-color: rgba(226, 232, 240, 0.95) !important;
+}
+
+html.light .bg-navy-750,
+body.light .bg-navy-750 {
+  background-color: #CBD5E1 !important;
+}
+
+html.light .bg-navy-700,
+body.light .bg-navy-700 {
+  background-color: #94A3B8 !important;
+}
+
+/* Hover background states */
+html.light .hover\:bg-navy-950:hover,
+body.light .hover\:bg-navy-950:hover,
+html.light .hover\:bg-navy-900:hover,
+body.light .hover\:bg-navy-900:hover {
+  background-color: #F1F5F9 !important;
+}
+
+html.light .hover\:bg-navy-850:hover,
+body.light .hover\:bg-navy-850:hover,
+html.light .hover\:bg-navy-800:hover,
+body.light .hover\:bg-navy-800:hover {
+  background-color: #E2E8F0 !important;
+}
+
+html.light .hover\:bg-navy-750:hover,
+body.light .hover\:bg-navy-750:hover {
+  background-color: #CBD5E1 !important;
+}
+
+/* Text and typography */
+html.light .text-white,
+body.light .text-white {
+  color: #0F172A !important;
+}
+
+html.light .text-slate-100,
+body.light .text-slate-100,
+html.light .text-slate-200,
+body.light .text-slate-200 {
+  color: #1E293B !important;
+}
+
+html.light .text-slate-300,
+body.light .text-slate-300 {
+  color: #334155 !important;
+}
+
+html.light .text-slate-400,
+body.light .text-slate-400 {
+  color: #64748B !important;
+}
+
+html.light .text-slate-500,
+body.light .text-slate-500 {
+  color: #94A3B8 !important;
+}
+
+html.light .hover\:text-white:hover,
+body.light .hover\:text-white:hover {
+  color: #0F172A !important;
+}
+
+html.light .hover\:text-slate-200:hover,
+body.light .hover\:text-slate-200:hover {
+  color: #1E293B !important;
+}
+
+html.light .hover\:text-slate-300:hover,
+body.light .hover\:text-slate-300:hover {
+  color: #334155 !important;
+}
+
+html.light .group:hover .group-hover\:text-white,
+body.light .group:hover .group-hover\:text-white {
+  color: #0F172A !important;
+}
+
+/* High contrast for pastel badge text in Light Mode */
+html.light .text-red-300,
+body.light .text-red-300 {
+  color: #DC2626 !important;
+}
+
+html.light .text-amber-300,
+body.light .text-amber-300 {
+  color: #D97706 !important;
+}
+
+html.light .text-rose-300,
+body.light .text-rose-300 {
+  color: #E11D48 !important;
+}
+
+html.light .text-emerald-300,
+body.light .text-emerald-300 {
+  color: #059669 !important;
+}
+
+html.light .text-blue-300,
+body.light .text-blue-300 {
+  color: #2563EB !important;
+}
+
+html.light .text-indigo-300,
+body.light .text-indigo-300 {
+  color: #4F46E5 !important;
+}
+
+html.light .text-purple-300,
+body.light .text-purple-300 {
+  color: #7C3AED !important;
+}
+
+/* Borders */
+html.light .border-surface-border,
+body.light .border-surface-border,
+html.light .border-surface-border-light,
+body.light .border-surface-border-light,
+html.light .border-navy-900,
+body.light .border-navy-900,
+html.light .border-navy-850,
+body.light .border-navy-850,
+html.light .border-navy-800,
+body.light .border-navy-800,
+html.light .border-navy-750,
+body.light .border-navy-750,
+html.light .border-navy-700,
+body.light .border-navy-700 {
+  border-color: #E2E8F0 !important;
+}
+
+html.light .hover\:border-navy-750:hover,
+body.light .hover\:border-navy-750:hover,
+html.light .hover\:border-navy-700:hover,
+body.light .hover\:border-navy-700:hover,
+html.light .hover\:border-navy-600:hover,
+body.light .hover\:border-navy-600:hover {
+  border-color: #CBD5E1 !important;
+}
+
+/* Form controls & inputs */
+html.light input,
+html.light select,
+html.light textarea,
+body.light input,
+body.light select,
+body.light textarea {
+  color: #0F172A !important;
+  background-color: #FFFFFF !important;
+  border-color: #CBD5E1 !important;
+}
+
+html.light select option,
+body.light select option {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+}
+
+html.light optgroup,
+body.light optgroup {
+  background-color: #F8FAFC !important;
+  color: #64748B !important;
+}
+
+/* Tables */
+html.light table thead,
+body.light table thead {
+  background-color: #F1F5F9 !important;
+  border-color: #E2E8F0 !important;
+}
+
+html.light table tbody tr,
+body.light table tbody tr {
+  border-color: #E2E8F0 !important;
+}
+
+html.light table tbody tr:hover,
+body.light table tbody tr:hover {
+  background-color: #F8FAFC !important;
+}
+
+/* SVG Chart adjustments */
+html.light svg line[stroke="#1E293B"],
+body.light svg line[stroke="#1E293B"] {
+  stroke: #E2E8F0 !important;
+}
+
+/* Subtly elevate white cards against the slate-50 background in light mode */
+html.light .rounded-xl.border,
+html.light .rounded-lg.border,
+body.light .rounded-xl.border,
+body.light .rounded-lg.border {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* Scrollbars in Light Mode */
+html.light ::-webkit-scrollbar-thumb,
+body.light ::-webkit-scrollbar-thumb {
+  background-color: #CBD5E1;
+}
+
+html.light ::-webkit-scrollbar-thumb:hover,
+body.light ::-webkit-scrollbar-thumb:hover {
+  background-color: #94A3B8;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

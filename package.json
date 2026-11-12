@@ -1,0 +1,59 @@
+{
+  "name": "service-team-troubleshooting-tools",
+  "version": "1.0.0",
+  "description": "VoIP & Call Quality Forensic Diagnostics Lab for Service Operations",
+  "author": "Service Operations Team",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "preview": "vite preview",
+    "build": "tsc && vite build && tsc -p tsconfig.electron.json",
+    "electron:dev": "tsc -p tsconfig.electron.json && concurrently -k \"vite\" \"wait-on tcp:5199 && cross-env ELECTRON_DEV=1 ELECTRON_RUN_AS_NODE= electron .\"",
+    "electron:prod": "npm run build && cross-env ELECTRON_RUN_AS_NODE= electron .",
+    "electron:build": "npm run build && electron-builder",
+    "test": "tsc src/types/electron.d.ts src/tests/callQualityService.test.ts src/tests/investigationDecisionEngine.test.ts src/tests/globalpingService.test.ts src/tests/customerDiagnosticService.test.ts src/tests/voiceQualityCalculator.test.ts src/tests/pcapParser.test.ts --outDir dist-test --target es2022 --module commonjs --moduleResolution node --esModuleInterop --skipLibCheck && node dist-test/tests/callQualityService.test.js && node dist-test/tests/investigationDecisionEngine.test.js && node dist-test/tests/globalpingService.test.js && node dist-test/tests/customerDiagnosticService.test.js && node dist-test/tests/voiceQualityCalculator.test.js && node dist-test/tests/pcapParser.test.js && rm -rf dist-test",
+    "start": "npm run electron:dev"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.16.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^2.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.8.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.0.1",
+    "cross-env": "^7.0.3",
+    "electron": "^33.4.11",
+    "electron-builder": "^26.18.0",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "wait-on": "^8.0.1"
+  },
+  "build": {
+    "appId": "com.servicetools.callquality",
+    "productName": "Service Team Troubleshooting Tools",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.developer-tools"
+    }
+  }
+}
