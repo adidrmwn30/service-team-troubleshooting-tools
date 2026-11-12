@@ -129,8 +129,14 @@ export const PcapAnalyzerView: React.FC = () => {
     }
   };
 
+  const MAX_PCAP_SIZE_BYTES = 100 * 1024 * 1024; // 100 MB maximum for client-side memory safety
+
   const handleFileUpload = (file: File) => {
     if (!file) return;
+    if (file.size > MAX_PCAP_SIZE_BYTES) {
+      setErrorMessage(`File size (${(file.size / (1024 * 1024)).toFixed(1)} MB) exceeds the maximum in-memory limit (100 MB). Please filter or truncate the capture in Wireshark/tcpdump first.`);
+      return;
+    }
     setIsLoading(true);
     setErrorMessage(null);
     setActivePresetId('custom');
@@ -175,6 +181,10 @@ export const PcapAnalyzerView: React.FC = () => {
 
   const handleDualFileUpload = (file: File, isLegA: boolean) => {
     if (!file) return;
+    if (file.size > MAX_PCAP_SIZE_BYTES) {
+      setErrorMessage(`Boundary trace file (${(file.size / (1024 * 1024)).toFixed(1)} MB) exceeds 100 MB limit.`);
+      return;
+    }
     const reader = new FileReader();
     reader.onload = (e) => {
       try {

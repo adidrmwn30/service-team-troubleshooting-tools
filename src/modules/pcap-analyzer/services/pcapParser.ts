@@ -124,7 +124,10 @@ export function parsePcapArrayBuffer(buffer: ArrayBuffer, filename: string): Par
     // PCAPNG Section Header Block
     isPcapng = true;
   } else {
-    // Fallback: If text dump or unknown format, try text fallback
+    // Fallback: If text dump or unknown format, try text fallback only for small text files (<10MB)
+    if (buffer.byteLength > 10 * 1024 * 1024) {
+      throw new Error('Unsupported binary capture format. File is not a valid PCAP/PCAPNG file.');
+    }
     return parseTextHexDump(new TextDecoder().decode(buffer), filename, buffer.byteLength);
   }
 

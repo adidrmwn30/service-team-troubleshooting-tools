@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, safeStorage, shell, dialog } from 'electron';
+import { app, BrowserWindow, ipcMain, safeStorage, shell, dialog, session } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import { B3_ORG_UUID, parseB3Credentials } from './b3InboxService';
@@ -83,6 +83,7 @@ function createWindow(): void {
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: true,
+      webSecurity: true,
     },
   });
 
@@ -92,6 +93,21 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
   }
+
+  // Intercept in-window navigation to prevent opening remote URLs inside the desktop app frame
+  mainWindow.webContents.on('will-navigate', (event, navigationUrl) => {
+    try {
+      const parsedUrl = new URL(navigationUrl);
+      if (isDev && (parsedUrl.origin === 'http://localhost:5199' || parsedUrl.origin === 'http://127.0.0.1:5199')) {
+        return;
+      }
+      if (parsedUrl.protocol === 'file:') {
+        return;
+      }
+    } catch {}
+    event.preventDefault();
+    safeOpenExternal(navigationUrl);
+  });
 
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     safeOpenExternal(url);
@@ -219,7 +235,27 @@ ipcMain.handle('call-quality:open-login-window', async () => {
         nodeIntegration: false,
         contextIsolation: true,
         sandbox: true,
+        webSecurity: true,
       },
+    });
+
+    // Restrict auth navigation strictly to B3 portal and official SSO identity providers
+    authWindow.webContents.on('will-navigate', (event, targetUrl) => {
+      try {
+        const host = new URL(targetUrl).hostname.toLowerCase();
+        const allowedHosts = [
+          'b3networks.com',
+          'portal.b3networks.com',
+          'accounts.google.com',
+          'login.microsoftonline.com',
+        ];
+        const isAllowed = allowedHosts.some((h) => host === h || host.endsWith(`.${h}`));
+        if (!isAllowed) {
+          event.preventDefault();
+        }
+      } catch {
+        event.preventDefault();
+      }
     });
 
     // Use standard Chrome User Agent to avoid Google OAuth blocking Electron embedded browsers
@@ -493,6 +529,11 @@ ipcMain.handle('globalping:get-measurement', async (_event, id: string) => {
 });
 
 app.whenReady().then(() => {
+  // Security hardening: Deny all permission requests (camera, microphone, geolocation, notifications)
+  session.defaultSession.setPermissionRequestHandler((_webContents, _permission, callback) => {
+    callback(false);
+  });
+
   createWindow();
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
