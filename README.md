@@ -6,7 +6,8 @@
 [![Electron](https://img.shields.io/badge/Electron-33.4-47848F.svg)](https://www.electronjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-5.4-646CFF.svg)](https://vitejs.dev/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-38B2AC.svg)](https://tailwindcss.com/)
-[![Tests Passing](https://img.shields.io/badge/Tests-Passing-success.svg)](https://github.com/)
+[![Release](https://img.shields.io/badge/Release-v1.0.0-blue.svg)](https://github.com/adidrmwn30/service-team-troubleshooting-tools/releases/tag/v1.0.0)
+[![Tests Passing](https://img.shields.io/badge/Tests-Passing-success.svg)](https://github.com/adidrmwn30/service-team-troubleshooting-tools)
 
 ---
 
@@ -139,31 +140,47 @@ This workbench consolidates all of these critical capabilities into a single, co
 
 ## 💻 Installation & Setup
 
-### Prerequisites
+### Option A: Pre-built macOS App (Recommended for Users)
+Ready-to-use binaries are published under [GitHub Releases (v1.0.0)](https://github.com/adidrmwn30/service-team-troubleshooting-tools/releases/tag/v1.0.0):
+- **Apple Silicon (M1/M2/M3/M4)**: `Service Team Troubleshooting Tools-1.0.0-arm64.dmg` or `.zip`
+
+> [!NOTE]
+> **macOS Gatekeeper First Launch**: Because this internal support tool is self-signed, macOS Gatekeeper may show a warning on first launch. To resolve:
+> 1. Open **Terminal.app** and run:
+>    ```bash
+>    xattr -cr "/Applications/Service Team Troubleshooting Tools.app"
+>    ```
+> 2. Alternatively, right-click (or Control-click) the application in Finder and select **Open**, then click **Open** in the confirmation dialog.
+
+---
+
+### Option B: Build & Run from Source (Developers)
+
+#### Prerequisites
 - **Node.js**: Version 18.x or 20.x+
 - **npm**: Version 9.x or higher
 
-### 1. Clone Repository & Install Dependencies
+#### 1. Clone Repository & Install Dependencies
 ```bash
-git clone https://github.com/your-org/service-team-troubleshooting-tools.git
+git clone https://github.com/adidrmwn30/service-team-troubleshooting-tools.git
 cd service-team-troubleshooting-tools
 npm install
 ```
 
-### 2. Running in Web Development Mode (Vite)
+#### 2. Running in Web Development Mode (Vite)
 Starts the local development server in the browser:
 ```bash
 npm run dev
 ```
 Open [http://localhost:5199](http://localhost:5199) in your browser.
 
-### 3. Running in Desktop Electron Mode
+#### 3. Running in Desktop Electron Mode
 Starts the full native desktop application with window frame and local IPC bridge:
 ```bash
 npm run electron:dev
 ```
 
-### 4. Running the Complete Automated Test Suite
+#### 4. Running the Complete Automated Test Suite
 Executes the comprehensive unit and integration test suite across all engines:
 ```bash
 npm test
@@ -176,21 +193,20 @@ The test suite verifies:
 - Capture readiness auditor and scoring
 - Voice quality ITU-T G.107 MOS calculations
 
-### 5. Production Build
+#### 5. Production Build
 Compile TypeScript and generate optimized Vite bundles and Electron main/preload binaries:
 ```bash
 npm run build
 ```
 
-### 6. Packaging Executables (macOS, Windows, Linux)
+#### 6. Packaging Executables (macOS DMG & ZIP)
 Build native standalone desktop distributables:
 ```bash
 npm run electron:build
 ```
 Binaries will be output to the `release/` directory:
-- **macOS**: `.dmg` and `.zip` (Universal / Apple Silicon & Intel)
-- **Windows**: `.exe` / NSIS installer (when configured)
-- **Linux**: `.AppImage` / `.deb` (when configured)
+- **macOS**: `release/Service Team Troubleshooting Tools-1.0.0-arm64.dmg` and `release/Service Team Troubleshooting Tools-1.0.0-arm64-mac.zip` (Apple Silicon & Intel)
+- **Windows / Linux**: Configurable via `electron-builder`
 
 ---
 
